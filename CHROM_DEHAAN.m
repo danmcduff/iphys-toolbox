@@ -1,4 +1,4 @@
-function [BVP, PR, HR_ECG, PR_PPG, SNR] = POS_WANG(VideoFile, StartTime, Duration, BioSemiData, ECGMark, PPGMark, PlotTF)
+function [BVP, PR, HR_ECG, PR_PPG, SNR] = CHROM_DEHAAN(VideoFile, StartTime, Duration, BioSemiData, ECGMark, PPGMark, PlotTF)
 % POS_WANG The POS (Wang et al. 2016) Method Applied to the AFRL dataset.
 %
 %   Inputs:
