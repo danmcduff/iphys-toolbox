@@ -1,6 +1,10 @@
 # The AFRL-MSR iPPG-Toolbox
 A MATLAB toolbox for iPPG analysis.  The toolbox includes implementations of commonly used methods.
 
+If you find this toolbox helpful and make use of it in your work please cite:
+
+[...]
+
 ## Background: ## 
 
 In the past few years a lot of attention has been given to methods for remotely measuring PPG using low-cost cameras.  Imaging PPG (iPPG) focuses on the measurement of volumetric changes in blood flow at distance from the body using imaging devices to capture changes in transmitted or relected light. 
@@ -42,4 +46,21 @@ SNR -
 ...
 
 ## AFRL Dataset: ##
-...
+
+Videos were recorded with a Scout scA640-120gc GigE-standard, color camera, capturing 8-bit, 658x492 pixel images, 120 fps. The camera was equipped with 16 mm fixed focal length lenses. Twenty-five participants (17 males) were recruited to participate for the study.
+%Nine individuals were wearing glasses, eight had facial hair, and four were wearing makeup on their face and/or neck.  The participants exhibited the following estimated Fitzpatrick Sun-Reactivity Skin Types: I-1, II-13, III-10, IV-2, V-0.
+Gold-standard physiological signals were measured using a research-grade biopotential acquisition unit.
+
+Each participant completed six (each against two background screens) 5-minute tasks.  The tasks were designed to capture different levels of head motion. 
+
+Task 1: Participants placed their chin on a chin rest (normal to the camera) in order to limit head motion.
+
+Task 2: Participants repeated Task 1 without the aid of the chin rest, allowing for small natural motions.
+
+Task 3: Participants performed a 120-degree sweep centered about the camera at a speed of 10 degrees/sec.
+
+Task 4: As Task 3 but with a speed of 20 degrees/sec.
+
+Task 5: As Task 3 but with a speed of 30 degrees/sec.
+
+Task 6: Participants were asked to reorient their head position once per second to a randomly chosen imager in the array. Thus simulating random head motion.
