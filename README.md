@@ -50,32 +50,32 @@ The iPPG-toolbox accompanies the AFRL iPPG dataset (described below).  The scrip
 
 Each method takes the following inputs:
 
-%       VideoFile               = Video filename.
+*        VideoFile               =       Video filename.
 
-%       StartTime               = Timepoint at which to start process (default = 15);
+*       StartTime               =       Timepoint at which to start process (default = 15);
 
-%       Duration                = Duration of the time window to process (default = 30 seconds).
+*       Duration                =       Duration of the time window to process (default = 30 seconds).
 
-%       BioSemiData             = Corresponding BioSemiData file.
+*       BioSemiData             =       Corresponding BioSemiData file.
 
-%       ECGMark                 = Corresponding BioSemiData_ECGMark data file.
+*       ECGMark                 =       Corresponding BioSemiData_ECGMark data file.
 
-%       PPGMark                 = Corresponding BioSemiData_ECGMark data file.
+*       PPGMark                 =       Corresponding BioSemiData_ECGMark data file.
 
-%       PlotTF                  = Boolean to turn plotting results on or off.
+*       PlotTF                  =       Boolean to turn plotting results on or off.
 
 
 And produces the following output:
 
-%       BVP                     = The predicted blood volume pulse signal.
+*        BVP                     =    The predicted blood volume pulse signal.
 
-%       PR                      = Estimated Pulse Rate (PR) from processed BVP timeseries using peak in periodogram.
+*        PR                      =    Estimated Pulse Rate (PR) from processed BVP timeseries using peak in periodogram.
 
-%       HR_ECG                  = Gold startdard reference Heart Rate (HR) measured from the ECG timeseries.
+*        HR_ECG                  =    Gold startdard reference Heart Rate (HR) measured from the ECG timeseries.
 
-%       PR_PPG                  = Pulse Rate measured from the PPG timeseries for the window.
+*        PR_PPG                  =     Pulse Rate measured from the PPG timeseries for the window.
 
-%       SNR                     = Blood Volume Pulse Signal-to-Noise Ratio calculated based on the ECG HR frequency.
+*        SNR                     =    Blood Volume Pulse Signal-to-Noise Ratio calculated based on the ECG HR frequency.
 
 
 ### Example: ###
