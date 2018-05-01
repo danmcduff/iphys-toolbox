@@ -36,14 +36,58 @@ http://openaccess.thecvf.com/content_cvpr_2013/papers/Balakrishnan_Detecting_Pul
 
 Citation: Balakrishnan, G., Durand, F., & Guttag, J. (2013, June). Detecting pulse from head motions in video. In Computer Vision and Pattern Recognition (CVPR), 2013 IEEE Conference on (pp. 3430-3437). IEEE.
 
-### Additional Tools: ###
-
-SNR -
-
 
 ## Usage: ##
 
-...
+The iPPG-toolbox accompanies the AFRL iPPG dataset (described below).  The scripts have been created to allow easy processing of the dataset but also to generalize to other iPPG data.
+
+Each method takes the following inputs:
+
+%       VideoFile               = Video filename.
+
+%       StartTime               = Timepoint at which to start process (default = 15);
+
+%       Duration                = Duration of the time window to process (default = 30 seconds).
+
+%       BioSemiData             = Corresponding BioSemiData file.
+
+%       ECGMark                 = Corresponding BioSemiData_ECGMark data file.
+
+%       PPGMark                 = Corresponding BioSemiData_ECGMark data file.
+
+%       PlotTF                  = Boolean to turn plotting results on or off.
+
+
+And produces the following output:
+
+%       BVP                     = Processed Blood Volume Pulse using JADE ICA.
+
+%       PR                      = Estimated Pulse Rate from processed BVP timeseries using peak in periodogram.
+
+%       HR_ECG                  = Gold startdard Heart Rate measured from the ECG timeseries for the window.
+
+%       PR_PPG                  = Pulse Rate measured from the PPG timeseries for the window.
+
+%       SNR                     = Blood Volume Pulse Signal-to-Noise Ratio calculated based on the ECG HR frequency.
+
+
+### Example: ###
+
+VideoFile = "";
+
+StartTime = 15;
+
+Duration = 300;
+
+BioSemiData = "";
+
+ECGMark = ;
+
+PPGMark = ;
+
+PlotTF = False;
+
+[BVP, PR, HR_ECG, PR_PPG, SNR] = ICA_POH(VideoFile, StartTime, Duration, BioSemiData, ECGMark, PPGMark, PlotTF)
 
 ## AFRL Dataset: ##
 
