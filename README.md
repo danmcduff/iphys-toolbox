@@ -67,11 +67,11 @@ Each method takes the following inputs:
 
 And produces the following output:
 
-%       BVP                     = Processed Blood Volume Pulse using JADE ICA.
+%       BVP                     = The predicted blood volume pulse signal.
 
-%       PR                      = Estimated Pulse Rate from processed BVP timeseries using peak in periodogram.
+%       PR                      = Estimated Pulse Rate (PR) from processed BVP timeseries using peak in periodogram.
 
-%       HR_ECG                  = Gold startdard Heart Rate measured from the ECG timeseries for the window.
+%       HR_ECG                  = Gold startdard reference Heart Rate (HR) measured from the ECG timeseries.
 
 %       PR_PPG                  = Pulse Rate measured from the PPG timeseries for the window.
 
