@@ -18,6 +18,8 @@ The plane orthogonal to the skin (POS [2017]) algorithm assumes the presence of 
 
 ## Methods: ## 
 
+The toolbox contains implementations of the several of the most commonly used methods for video-based physiological measurement. Below we give citations and links to the publications on which these implementations are based:
+
 ### ICA - Poh, McDuff, Picard (2010) ###
 
 https://www.osapublishing.org/viewmedia.cfm?uri=oe-18-10-10762&seq=0&origin=search
@@ -43,6 +45,8 @@ http://openaccess.thecvf.com/content_cvpr_2013/papers/Balakrishnan_Detecting_Pul
 
 Citation: Balakrishnan, G., Durand, F., & Guttag, J. (2013, June). Detecting pulse from head motions in video. In Computer Vision and Pattern Recognition (CVPR), 2013 IEEE Conference on (pp. 3430-3437). IEEE.
 
+
+We would happily include additional implementations of iPPG or iBCG algorithms in this toolbox. If you would like to contribute an implemntations of a new method please submit a pull request or email: damcduff@microsoft.com
 
 ## Usage: ##
 
