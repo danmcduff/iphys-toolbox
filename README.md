@@ -98,6 +98,8 @@ PlotTF = False;
 
 ## AFRL Dataset: ##
 
+![Alt text](imgs/Frames.png?raw=true "AFRL Dataset.")
+
 Videos were recorded with a Scout scA640-120gc GigE-standard, color camera, capturing 8-bit, 658x492 pixel images, 120 fps. The camera was equipped with 16 mm fixed focal length lenses. Twenty-five participants (17 males) were recruited to participate for the study.
 %Nine individuals were wearing glasses, eight had facial hair, and four were wearing makeup on their face and/or neck.  The participants exhibited the following estimated Fitzpatrick Sun-Reactivity Skin Types: I-1, II-13, III-10, IV-2, V-0.
 Gold-standard physiological signals were measured using a research-grade biopotential acquisition unit.
