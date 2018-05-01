@@ -50,7 +50,7 @@ The iPPG-toolbox accompanies the AFRL iPPG dataset (described below).  The scrip
 
 Each method takes the following inputs:
 
-*        VideoFile               =       Video filename.
+*       VideoFile               =       Video filename.
 
 *       StartTime               =       Timepoint at which to start process (default = 15);
 
@@ -69,7 +69,7 @@ And produces the following output:
 
 *        BVP                     =    The predicted blood volume pulse signal.
 
-*        PR                      =    Estimated Pulse Rate (PR) from processed BVP timeseries using peak in periodogram.
+*        PR                      =    Estimated Pulse Rate (PR) from BVP timeseries using peak in periodogram.
 
 *        HR_ECG                  =    Gold startdard reference Heart Rate (HR) measured from the ECG timeseries.
 
