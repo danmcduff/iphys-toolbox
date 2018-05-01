@@ -1,5 +1,7 @@
 # The AFRL-MSR iPPG-Toolbox
-A MATLAB toolbox for iPPG analysis.  The toolbox includes implementations of commonly used methods.
+In the past few years a lot of attention has been given to methods for remotely measuring PPG using low-cost cameras.  Imaging PPG (iPPG) focuses on the measurement of volumetric changes in blood flow at distance from the body using imaging devices to capture changes in transmitted or relected light. 
+
+This toolbox contains MATLAB implementations of a number of algorithms for iPPG analysis.  The toolbox includes implementations of many of the most commonly used baseline methods and was created to accompany the largest public iPPG dataset.
 
 If you find this toolbox helpful and make use of it in your work please cite:
 
@@ -7,7 +9,12 @@ If you find this toolbox helpful and make use of it in your work please cite:
 
 ## Background: ## 
 
-In the past few years a lot of attention has been given to methods for remotely measuring PPG using low-cost cameras.  Imaging PPG (iPPG) focuses on the measurement of volumetric changes in blood flow at distance from the body using imaging devices to capture changes in transmitted or relected light. 
+Imaging photoplethysmography (iPPG) has developed as a method for capturing the BVP signal remotely using digital cameras and ambient light. Almost any digital camera (i.e., webcam or cellphone camera) is sufficiently sensitive to capture the pulse signal when the subject is close to the device.  Poh et al. (2010) proposed the use of Independent Component Analysis (ICA) to recover the pulse signal and enable a fully automated iPPG framework
+
+![Alt text](imgs/Imaging_PPG.png?raw=true "Imaging PPG pipeline.")
+
+Methods inspired by optical models of the skin have helped advance the state-of-the art. The CHROM (2013) method uses a linear combination of the chrominance signals and makes the assumption of a standardized skin color profile to white-balance the video frames. 
+The plane orthogonal to the skin (POS [2017]) algorithm assumes the presence of a pulsatile color space signal and posits that this will be orthogonal to the skin color space.
 
 ## Methods: ## 
 
@@ -108,3 +115,7 @@ Task 4: As Task 3 but with a speed of 20 degrees/sec.
 Task 5: As Task 3 but with a speed of 30 degrees/sec.
 
 Task 6: Participants were asked to reorient their head position once per second to a randomly chosen imager in the array. Thus simulating random head motion.
+
+Download the AFRL Datasets Here:
+
+[LINK]
