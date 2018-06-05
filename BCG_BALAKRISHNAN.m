@@ -40,17 +40,18 @@ framesToRead=ceil(Duration*vidObj.FrameRate); %video may be encoded at slightly 
 % bbox = step(faceDetector, vidFrame);
 % [~,Idx]=max(bbox(:,3));
 % bbox=bbox(Idx,:);
-bbox = [0,0,vidObj.width,vidObj.height];
+bbox = [1,1,vidObj.width,vidObj.height];
 
 minQ = 0.01;
+vidFrame = readFrame(vidObj);
 points0 = detectMinEigenFeatures(rgb2gray(vidFrame),'ROI',bbox,'MinQuality',minQ);
 
 % Remove eye region:
-for i = size(points0.Location,1):-1:1
-    if points0.Location(i,2)>= bbox(2)+round(boxH*0.2) && points0.Location(i,2)<= bbox(2)+round(boxH*0.55)
-        points0(i) = [];
-    end
-end
+% for i = size(points0.Location,1):-1:1
+%     if points0.Location(i,2)>= bbox(2)+round(boxH*0.2) && points0.Location(i,2)<= bbox(2)+round(boxH*0.55)
+%         points0(i) = [];
+%     end
+% end
 
 if length(points0) < 5
     HR = 0; HR0 = 0; mySNR = 0;
@@ -79,6 +80,7 @@ end
 %% Butterworth 3rd order filter:
 lpf = 0.70; %low cutoff frequency (Hz)
 hpf = 2.50; %high cutoff frequency (Hz)
+nyquist = 1/2*fs;
 [b,a] = butter(3,[lpf/nyquist hpf/nyquist]);
 d_filt = filtfilt(b,a,double(d'));
 
@@ -89,7 +91,8 @@ d_filt3=d_filt2(dMask,:);
 [coeff, ~, latent] = pca(d_filt3);
 score = bsxfun(@minus, d_filt, mean(d_filt))/coeff';
 
-[pxx2,f2] = plomb(score(:,1:5),t);
+f=find(t>0);
+[pxx2,f2] = plomb(score(f,1:5),t(f));
 
 fmask2 = (f2 >= 0.7)&(f2 <= 2.5);
 frange2 = f2(fmask2);
