@@ -1,4 +1,5 @@
-clear; close all; clc;
+clc, clear; close all
+addpath(genpath([cd '\tools\']))
 
 %% Set variables:
 VideoFile               = 'E:\EX\test\P05T01VideoB2_MSMPEG4V3_Q95.avi';

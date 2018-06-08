@@ -1,5 +1,5 @@
 function [BVP, PR, HR_ECG, PR_PPG, SNR] = POS_WANG(VideoFile, StartTime, Duration, BioSemiData, ECGMark, PPGMark, PlotTF)
-% POS_WANG The POS (Wang et al. 2016) Method Applied to the AFRL dataset.
+% POS_WANG The POS (Wang et al. 2016) Method applied to the AFRL dataset.
 %
 %   Inputs:
 %       VideoFile               = Video filename.
@@ -11,13 +11,31 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = POS_WANG(VideoFile, StartTime, Duratio
 %       PlotTF                  = Boolean to turn plotting results on or off.
 %
 %   Outputs:
-%       BVP                     = Processed Blood Volume Pulse using JADE ICA.
+%       BVP                     = Processed Blood Volume Pulse using Plane Orthogonal to Skin (POS) method (Wang et al. 2016).
 %       PR                      = Estimated Pulse Rate from processed BVP timeseries using peak in periodogram.
-%       HR_ECG                  = Gold startdard Heart Rate measured from the ECG timeseries for the window.
+%       HR_ECG                  = Gold standard Heart Rate measured from the ECG timeseries for the window.
 %       PR_PPG                  = Pulse Rate measured from the PPG timeseries for the window.
 %       SNR                     = Blood Volume Pulse Signal-to-Noise Ratio calculated based on the ECG HR frequency using a method adapted from the method by G. de Haan, TBME, 2013
 %
-% Daniel McDuff, Ethan Blackford, Justin Estepp, April 2018
+%   Requires - Signal Processing Toolbox
+%
+% Daniel McDuff, Ethan Blackford, Justin Estepp, June 2018
+
+%% Parameters
+FS = 120; %true frame rate
+
+SkinSegmentTF=false;
+
+LPF = 0.6667; %low cutoff frequency (Hz) - specified as 40 bpm (only used for pow
+HPF = 4.0; %high cutoff frequency (Hz)
+
+WinSec=1.6;%(was a 32 frame window with 20 fps camera)
+
+%% Add Backup Functions
+if(~license('test', 'image_toolbox')&&SkinSegmentTF)
+    %addpath([cd '\optional\']);%GNU GPL rgb2ycbcr.m function
+    addpath([cd '\optional\rgb2ycbcr.m']);%GNU GPL rgb2ycbcr.m function
+end
 
 %% Plot Control
 if(PlotTF)
@@ -29,90 +47,87 @@ else
 end
 
 %% Load Video:
-vidObj = VideoReader(VideoFile);
-vidObj.CurrentTime = StartTime;
+VidObj = VideoReader(VideoFile);
+VidObj.CurrentTime = StartTime;
 
-fs = 120; %true frame rate
-framesToRead=ceil(Duration*vidObj.FrameRate); %video may be encoded at slightly different frame rate
-
-%% Initialize Face Detector (UNCOMMENT IF USING A FACE DETECTOR):
-% faceDetector = vision.CascadeObjectDetector();
-% d_raw=[];
-% bbox = step(faceDetector, vidFrame);
-% [~,Idx]=max(bbox(:,3));
-% bbox=bbox(Idx,:);
-
-%% Initialize Time Vector:
-t = zeros(framesToRead,1);
+FramesToRead=floor(Duration*VidObj.FrameRate); %video may be encoded at slightly different frame rate
 
 %% Read Video and Spatially Average:
-colors=zeros(framesToRead,3);
-fn=0;
-while hasFrame(vidObj) && (vidObj.CurrentTime <= StartTime+Duration)
-    fn = fn+1;
-    t(fn) = vidObj.CurrentTime;
-    vidFrame = readFrame(vidObj);
-    vidROI = vidFrame;
+T = zeros(FramesToRead,1);%initialize Time Vector
+RGB=zeros(FramesToRead,3);%initialize color signal
+FN=0;
+while hasFrame(VidObj) && (VidObj.CurrentTime <= StartTime+Duration)
+    FN = FN+1;
+    T(FN) = VidObj.CurrentTime;
+    VidFrame = readFrame(VidObj);
     
-    vidROI = vidFrame;
-    YCBCR = rgb2ycbcr(vidROI);
-    Yth = YCBCR(:,:,1)>80;
-    CBth = (YCBCR(:,:,2)>77).*(YCBCR(:,:,2)<127);
-    CRth = (YCBCR(:,:,3)>133).*(YCBCR(:,:,3)<173);
-    ROISkin = vidROI.*repmat(uint8(Yth.*CBth.*CRth),[1,1,3]);
-    d_raw = [d_raw sum(sum(ROISkin,1),2)./sum(sum(logical(ROISkin),1),2)]; 
-end
-colors = squeeze(d_raw);
+    %position for optional face detection/tracking - originally specified in
+    %reference as a CSK detector from Henriques et al., 2012
+    VidROI = VidFrame;
+    
+    if(SkinSegmentTF)%skin segmentation - originally specified in reference as an OC-SVM from Wang
+    %et al. 2015
+        YCBCR = rgb2ycbcr(VidROI);
+        Yth = YCBCR(:,:,1)>80;
+        CBth = (YCBCR(:,:,2)>77).*(YCBCR(:,:,2)<127);
+        CRth = (YCBCR(:,:,3)>133).*(YCBCR(:,:,3)<173);
+        ROISkin = VidROI.*repmat(uint8(Yth.*CBth.*CRth),[1,1,3]);
+        RGB(FN,:) = squeeze(sum(sum(ROISkin,1),2)./sum(sum(logical(ROISkin),1),2));
+    else
+        RGB(FN,:) = sum(sum(VidROI,2))./(size(VidROI,1)*size(VidROI,2));
+    end
+end%endwhile video
 
 %% POS:
-% Wenjing's transform
-dmean = mean(colors);
-d = bsxfun(@times,colors,1./dmean)-1;
-FF = fft(d);
-f = (0:size(d,1)-1)*fs/size(d,1);
+% Wenjin's transform
+RGBBase = mean(RGB);
+RGBNorm = bsxfun(@times,RGB,1./RGBBase)-1;
+FF = fft(RGBNorm);
+F = (0:size(RGBNorm,1)-1)*FS/size(RGBNorm,1);
 S = FF*[-1/sqrt(6);2/sqrt(6);-1/sqrt(6)];
 W = (S.*conj(S))./sum(FF.*conj(FF),2);
-fmask = (f >= 40/60)&(f <= 240/60);
-% fmask(length(fmask)/2+1:end)=fmask(length(fmask)/2:-1:1);
-fmask = fmask + fliplr(fmask);
-W=W.*fmask';
+FMask = (F >= LPF)&(F <= HPF);%40-240 bpm
+% FMask(length(FMask)/2+1:end)=FMask(length(FMask)/2:-1:1);
+FMask = FMask + fliplr(FMask);
+W=W.*FMask';%rectangular filter in frequency domain - not specified in original paper
 FF = FF.*repmat(W,[1,3]);
-d=real(ifft(FF));
-d = bsxfun(@times,d+1,dmean);
+RGBNorm=real(ifft(FF));
+RGBNorm = bsxfun(@times,RGBNorm+1,RGBBase);
 
-N = size(d,1);
-winL = 32/30*120; % /20*120
-Nwin = N-winL+1;
-S = zeros(Nwin,1);
-for i = 1:Nwin
-    Xwin = d(i:i+winL-1,:);
-    Xbase = mean(Xwin);
-    Xnorm = bsxfun(@times,Xwin,1./Xbase)-1;
+N = size(RGBNorm,1);
+WinL = ceil(WinSec*FS);
+S = zeros(N,1);
+for i = 1:N-1
+    if(i+WinL-1>length(S))%end of signal
+        XWin = RGBNorm(i:length(S),:);
+    else
+        XWin = RGBNorm(i:i+WinL-1,:);
+    end
     
-    % CHROM
-    %     	Xs = squeeze(3*Xnorm(:,1)-2*Xnorm(:,2));
-    %     	Ys = squeeze(1.5*Xnorm(:,1)+Xnorm(:,2)-1.5*Xnorm(:,3));
-    %     	Swin = Xs - std(Xs)./std(Ys).*Ys;
+    XBase = mean(XWin);
+    XNorm = bsxfun(@times,XWin,1./XBase)-1;
     
     % POS
-    Xs = squeeze(Xnorm(:,2)-Xnorm(:,3));
-    Ys = squeeze(Xnorm(:,2)+Xnorm(:,3)-2*Xnorm(:,1));
-    Swin = Xs + std(Xs)./std(Ys).*Ys;
+    Xs = squeeze(XNorm(:,2)-XNorm(:,3));
+    Ys = squeeze(-2*XNorm(:,1)+XNorm(:,2)+XNorm(:,3));
+    SWin = Xs + std(Xs)./std(Ys).*Ys;
     
-    Swin = Swin - mean(Swin);
-    S(i)=Swin(round(winL/2));
+    SWin = SWin - mean(SWin);
+    %overlap, add
+    if(i+WinL-1>length(S))%end of signal
+        S(i:end)=S(i:end)+SWin(1:length(S(i:end)));
+    else
+        S(i:i+WinL-1)=S(i:i+WinL-1)+SWin;
+    end
 end
 
-BVP_i = S; 
-BVP_f = BVP_i;
-
-BVP_n=BVP_f-mean(BVP_f); %normalize
-BVP=BVP_n;
+BVP_N=S-mean(S); %normalize
+BVP=BVP_N;
 
 % Estimate Pulse Rate from periodogram
-PR = prpsd(BVP,fs,lpf*60,hpf*60,PlotPRPSD);
+PR = prpsd(BVP,FS,40,240,PlotPRPSD);
 
-%% Groundtruth HR:
+%% Ground Truth HR:
 ECG=load(ECGMark,'KeepBeatData');
 %KeepBeatData Format (ECG)- Beat Index, Inter-Beat Interval (ms), Zero-Referenced Sample Index of R-wave Maximum, Zero-Referenced Time of R-Wave (s), Amplitude of R-Wave in Filtered Signal, Zero-Referenced Sample Index of R-wave Maximum, Zero-Referenced Time of S-Wave (s), Amplitude of S-Wave in Filtered Signal, User Added Data (0-automatic, 1-user added/ corrected)
 ECGMask = (ECG.KeepBeatData(:,4)>=StartTime)&(ECG.KeepBeatData(:,4)<=StartTime+Duration);
@@ -124,40 +139,42 @@ PPGMask = (PPG.KeepBeatData(:,4)>=StartTime)&(PPG.KeepBeatData(:,4)<=StartTime+D
 PR_PPG = 1/mean(diff(PPG.KeepBeatData(PPGMask,4)))*60;
 
 %% SNR
-SNR = bvpsnr(BVP,fs,HR_ECG,PlotSNR);
+SNR = bvpsnr(BVP,FS,HR_ECG,PlotSNR);
 
 %% Optionally Plot Timeseries
 if(PlotTF)
-    %{
-    % Plot iPPG BVP
-    figure, plot(t,BVP),xlabel('Time (s)'),ylabel('Amplitude (a.u.)')
-    %}
-    
     %Plot ECG, PPG, iPPG timeseries
     load(BioSemiData,'FiltNECG', 'FiltNPPG', 'ResampleTimeSeries')%load filtered and resampled ECG, PPG timeseries data
+    
     figure
-    subplot(3,1,1)
+    
+    Ax1=subplot(3,1,1);
     plot(ResampleTimeSeries,FiltNECG)
     hold on
     plot(ECG.KeepBeatData(:,4),ECG.KeepBeatData(:,5),'*')
-    xlim([StartTime StartTime+Duration])
     ylabel('ECG (a.u.)')
     title('ECG, PPG, iPPG Timeseries')
     
-    subplot(3,1,2)
+    Ax2=subplot(3,1,2);
     plot(ResampleTimeSeries,FiltNPPG)
     hold on
     plot(PPG.KeepBeatData(:,4),-1*PPG.KeepBeatData(:,5),'*')
-    xlim([StartTime StartTime+Duration])
     ylabel('PPG (a.u.)')
     
-    subplot(3,1,3)
-    plot(t,BVP)
+    Ax3=subplot(3,1,3);
+    plot(T,BVP)
     hold on
-    xlim([StartTime StartTime+Duration])
     ylabel('iPPG (a.u.)')
     
     xlabel('Time (s)')
-end
+    
+    linkaxes([Ax1,Ax2,Ax3],'x')
+    xlim([T(1) T(end)])%to account for differences caused by windows
+end%endif plot
+
+%% Remove Backup Functions
+if(~license('test', 'image_toolbox')&&SkinSegmentTF)%remove path if added
+    rmpath([cd '\optional\']);
 end
 
+end%end function
