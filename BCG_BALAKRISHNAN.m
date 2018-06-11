@@ -62,8 +62,8 @@ tracker = vision.PointTracker;
 initialize(tracker,Points0.Location,VidFrame);
 
 %% Read Video and Spatially Average:
-T = zeros(FramesToRead,1);%Initialize Time Vector
-D = zeros(FramesToRead,size(Points0.Location,1));%initialize D
+T = zeros(FramesToRead-1,1);%Initialize Time Vector
+D = zeros(FramesToRead-1,size(Points0.Location,1));%initialize D
 FN=0;
 while hasFrame(VidObj) && (VidObj.CurrentTime <= StartTime+Duration)
     FN = FN+1;
@@ -80,7 +80,7 @@ end
 %% Signal Processing:
 NyquistF = 1/2*FS;
 [B,A] = butter(5,[LPF/NyquistF HPF/NyquistF]);
-D_Filt = filtfilt(B,A,double(D'));
+D_Filt = filtfilt(B,A,double(D));
 
 D_Filt2 = bsxfun(@minus, D_Filt, D_Filt(1,:));
 DL2 = sqrt(sum(D_Filt2.^2,2));
