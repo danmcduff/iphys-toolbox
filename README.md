@@ -84,17 +84,17 @@ And produces the following output:
 
 ### Example: ###
 
-VideoFile = "";
+VideoFile = [path to videos folder]/P05T01VideoB2_MSMPEG4V3_Q95.avi;
 
 StartTime = 15;
 
 Duration = 300;
 
-BioSemiData = "";
+BioSemiData = [path to BioSemiData folder]/P05T01_BioSEMIData.mat;
 
-ECGMark = ;
+ECGMark = [path to BioSemiData folder]/P05T01_BioSEMIData_ECGMark.mat;
 
-PPGMark = ;
+PPGMark = [path to BioSemiData folder]/P05T01_BioSEMIData_PPGMark.mat;
 
 PlotTF = False;
 
