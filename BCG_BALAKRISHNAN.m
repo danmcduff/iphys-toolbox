@@ -23,8 +23,8 @@ function [BCG, PR, HR_ECG, PR_PPG, SNR] = BCG_BALAKRISHNAN(VideoFile, StartTime,
 %% Parameters
 FS = 120; %true frame rate
 
-LPF = 0.75; %low cutoff frequency (Hz)
-HPF = 5; %high cutoff frequency (Hz)
+LPF = 0.7; %Hz - low cutoff frequency (Hz) - 0.75 in reference
+HPF = 2.5; %Hz - high cutoff frequency (Hz) - 5.0 in reference
 
 %% Add Backup Functions
 if(~license('test', 'Statistics_Toolbox'))
