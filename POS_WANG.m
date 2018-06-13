@@ -26,8 +26,8 @@ FS = 120; %true frame rate
 
 SkinSegmentTF=false;
 
-LPF = 0.6667; %low cutoff frequency (Hz) - specified as 40 bpm (only used for pow
-HPF = 4.0; %high cutoff frequency (Hz)
+LPF = 0.7; %low cutoff frequency (Hz) - 40 bpm (0.667 Hz) in previous implementation
+HPF = 2.5; %high cutoff frequency (Hz) - 240 bpm (4.0 Hz) in previous implementation
 
 WinSec=1.6;%(was a 32 frame window with 20 fps camera)
 
