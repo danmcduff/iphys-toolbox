@@ -23,8 +23,8 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = ICA_POH(VideoFile, StartTime, Duration
 %% Parameters
 FS = 120; %true frame rate
 
-LPF = 0.70; %low cutoff frequency (Hz)
-HPF = 4.0; %high cutoff frequency (Hz)
+LPF = 0.7; %low cutoff frequency (Hz) - 0.7 Hz in reference
+HPF = 2.5; %high cutoff frequency (Hz) - 4.0 Hz in reference
 
 %% Plot Control
 if(PlotTF)

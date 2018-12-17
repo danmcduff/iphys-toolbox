@@ -82,7 +82,7 @@ end
 
 %% Signal Processing:
 NyquistF = 1/2*FS;
-[B,A] = butter(5,[LPF/NyquistF HPF/NyquistF]);
+[B,A] = butter(3,[LPF/NyquistF HPF/NyquistF]);%5th order butterworth filter in reference
 D_Filt = filtfilt(B,A,double(D));
 
 D_Filt2 = bsxfun(@minus, D_Filt, D_Filt(1,:));

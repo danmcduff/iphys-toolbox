@@ -26,6 +26,7 @@ FS = 120; %true frame rate
 
 SkinSegmentTF=false;
 
+
 LPF = 0.70; %low cutoff frequency (Hz)
 HPF = 4.0; %high cutoff frequency (Hz)
 % NOTE DIFFERENT FROM AS IN THE PAPER FOR CONSISTENCY:
