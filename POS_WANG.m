@@ -26,8 +26,11 @@ FS = 120; %true frame rate
 
 SkinSegmentTF=false;
 
-LPF = 0.6667; %low cutoff frequency (Hz) - specified as 40 bpm (only used for pow
+LPF = 0.70; %low cutoff frequency (Hz)
 HPF = 4.0; %high cutoff frequency (Hz)
+% NOTE DIFFERENT FROM AS IN THE PAPER FOR CONSISTENCY:
+%LPF = 0.6667; %low cutoff frequency (Hz) - specified as 40 bpm.
+%HPF = 4.0; %high cutoff frequency (Hz)
 
 WinSec=1.6;%(was a 32 frame window with 20 fps camera)
 
@@ -76,24 +79,29 @@ while hasFrame(VidObj) && (VidObj.CurrentTime <= StartTime+Duration)
     else
         RGB(FN,:) = sum(sum(VidROI,2))./(size(VidROI,1)*size(VidROI,2));
     end
-end%endwhile video
+end
 
 %% POS:
-% Wenjin's transform
-RGBBase = mean(RGB);
-RGBNorm = bsxfun(@times,RGB,1./RGBBase)-1;
-FF = fft(RGBNorm);
-F = (0:size(RGBNorm,1)-1)*FS/size(RGBNorm,1);
-S = FF*[-1/sqrt(6);2/sqrt(6);-1/sqrt(6)];
-W = (S.*conj(S))./sum(FF.*conj(FF),2);
-FMask = (F >= LPF)&(F <= HPF);%40-240 bpm
-% FMask(length(FMask)/2+1:end)=FMask(length(FMask)/2:-1:1);
-FMask = FMask + fliplr(FMask);
-W=W.*FMask';%rectangular filter in frequency domain - not specified in original paper
-FF = FF.*repmat(W,[1,3]);
-RGBNorm=real(ifft(FF));
-RGBNorm = bsxfun(@times,RGBNorm+1,RGBBase);
-
+% Transform from: Wang, W., den Brinker, A. C., Stuijk, S., & de Haan, G. (2017, May). Color-distortion filtering for remote photoplethysmography. In Automatic Face & Gesture Recognition (FG 2017), 2017 12th IEEE International Conference on (pp. 71-78). IEEE.
+useFGTransform=0;
+if useFGTransform
+    RGBBase = mean(RGB);
+    RGBNorm = bsxfun(@times,RGB,1./RGBBase)-1;
+    FF = fft(RGBNorm);
+    F = (0:size(RGBNorm,1)-1)*FS/size(RGBNorm,1);
+    S = FF*[-1/sqrt(6);2/sqrt(6);-1/sqrt(6)];
+    W = (S.*conj(S))./sum(FF.*conj(FF),2);
+    FMask = (F >= LPF)&(F <= HPF);%40-240 bpm
+    % FMask(length(FMask)/2+1:end)=FMask(length(FMask)/2:-1:1);
+    FMask = FMask + fliplr(FMask);
+    W=W.*FMask';%rectangular filter in frequency domain - not specified in original paper
+    FF = FF.*repmat(W,[1,3]);
+    RGBNorm=real(ifft(FF));
+    RGBNorm = bsxfun(@times,RGBNorm+1,RGBBase);
+else
+    RGBNorm = RGB;
+end
+        
 N = size(RGBNorm,1);
 WinL = ceil(WinSec*FS);
 S = zeros(N,1);
