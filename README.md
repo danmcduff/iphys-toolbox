@@ -51,7 +51,7 @@ Citation: Wang, W., den Brinker, A. C., Stuijk, S., & de Haan, G. (2017). Algori
 
 http://openaccess.thecvf.com/content_cvpr_2013/papers/Balakrishnan_Detecting_Pulse_from_2013_CVPR_paper.pdf
 
-Citation: Balakrishnan, G., Durand, F., & Guttag, J. (2013, June). Detecting pulse from head motions in video. In Computer Vision and Pattern Recognition (CVPR), 2013 IEEE Conference on (pp. 3430-3437). IEEE.
+Citation: Balakrishnan, G., Durand, F., & Guttag, J. (2013). Detecting pulse from head motions in video. In Computer Vision and Pattern Recognition (CVPR), 2013 IEEE Conference on (pp. 3430-3437). IEEE.
 
 
 We would happily include additional implementations of iPPG or iBCG algorithms in this toolbox. If you would like to contribute an implemntations of a new method please submit a pull request or email: damcduff@microsoft.com
