@@ -6,7 +6,8 @@ This toolbox contains MATLAB implementations of a number of algorithms for iPPG 
 If you find this toolbox helpful and make use of it in your work please cite:
 
 An Open Imaging-based Physiological Measurement Toolbox
-Daniel McDuff, Weixuan Vincent Chen, Ethan Blackford and Justin Estepp 
+
+Daniel McDuff, Ethan Blackford and Justin Estepp 
 
 ## Background: ## 
 
@@ -20,6 +21,12 @@ The plane orthogonal to the skin (POS [2017]) algorithm assumes the presence of 
 ## Methods: ## 
 
 The toolbox contains implementations of the several of the most commonly used methods for video-based physiological measurement. Below we give citations and links to the publications on which these implementations are based:
+
+### GREEN CHANNEL - Verkruysse, Svaasand, Nelson (2008) ###
+
+https://www.osapublishing.org/DirectPDFAccess/9A6ECF3A-E3F8-74A3-6FAD721D7E164888_175396/oe-16-26-21434.pdf?da=1&id=175396&seq=0&mobile=no
+
+Verkruysse, W., Svaasand, L. O., & Nelson, J. S. (2008). Remote plethysmographic imaging using ambient light. Optics express, 16(26), 21434-21445.
 
 ### ICA - Poh, McDuff, Picard (2010) ###
 
@@ -44,7 +51,7 @@ Citation: Wang, W., den Brinker, A. C., Stuijk, S., & de Haan, G. (2017). Algori
 
 http://openaccess.thecvf.com/content_cvpr_2013/papers/Balakrishnan_Detecting_Pulse_from_2013_CVPR_paper.pdf
 
-Citation: Balakrishnan, G., Durand, F., & Guttag, J. (2013, June). Detecting pulse from head motions in video. In Computer Vision and Pattern Recognition (CVPR), 2013 IEEE Conference on (pp. 3430-3437). IEEE.
+Citation: Balakrishnan, G., Durand, F., & Guttag, J. (2013). Detecting pulse from head motions in video. In Computer Vision and Pattern Recognition (CVPR), 2013 IEEE Conference on (pp. 3430-3437). IEEE.
 
 
 We would happily include additional implementations of iPPG or iBCG algorithms in this toolbox. If you would like to contribute an implemntations of a new method please submit a pull request or email: damcduff@microsoft.com
@@ -57,15 +64,15 @@ Each method takes the following inputs:
 
 *       VideoFile               =       Video filename.
 
+*       FS                      =       Framerate of Video;
+
 *       StartTime               =       Timepoint at which to start process (default = 15);
 
 *       Duration                =       Duration of the time window to process (default = 30 seconds).
 
-*       BioSemiData             =       Corresponding BioSemiData file.
+*       ECGMark                 =       Corresponding ECGData data file.
 
-*       ECGMark                 =       Corresponding BioSemiData_ECGMark data file.
-
-*       PPGMark                 =       Corresponding BioSemiData_ECGMark data file.
+*       PPGMark                 =       Corresponding PPGData data file.
 
 *       PlotTF                  =       Boolean to turn plotting results on or off.
 
@@ -85,17 +92,17 @@ And produces the following output:
 
 ### Example: ###
 
-VideoFile = [path to videos folder]/P05T01VideoB2_MSMPEG4V3_Q95.avi;
+VideoFile = test_data/example_video.mp4;
+
+FS = 30;
 
 StartTime = 15;
 
 Duration = 300;
 
-BioSemiData = [path to BioSemiData folder]/P05T01_BioSEMIData.mat;
+ECGMark = test_data/ECGData;
 
-ECGMark = [path to BioSemiData folder]/P05T01_BioSEMIData_ECGMark.mat;
-
-PPGMark = [path to BioSemiData folder]/P05T01_BioSEMIData_PPGMark.mat;
+PPGMark = test_data/PPGData;
 
 PlotTF = False;
 
