@@ -61,11 +61,9 @@ Each method takes the following inputs:
 
 *       Duration                =       Duration of the time window to process (default = 30 seconds).
 
-*       BioSemiData             =       Corresponding BioSemiData file.
+*       ECGMark                 =       Corresponding ECGData data file.
 
-*       ECGMark                 =       Corresponding BioSemiData_ECGMark data file.
-
-*       PPGMark                 =       Corresponding BioSemiData_ECGMark data file.
+*       PPGMark                 =       Corresponding PPGData data file.
 
 *       PlotTF                  =       Boolean to turn plotting results on or off.
 
@@ -85,17 +83,15 @@ And produces the following output:
 
 ### Example: ###
 
-VideoFile = [path to videos folder]/P05T01VideoB2_MSMPEG4V3_Q95.avi;
+VideoFile = test_data/example_video.mp4;
 
 StartTime = 15;
 
 Duration = 300;
 
-BioSemiData = [path to BioSemiData folder]/P05T01_BioSEMIData.mat;
+ECGMark = test_data/ECGData;
 
-ECGMark = [path to BioSemiData folder]/P05T01_BioSEMIData_ECGMark.mat;
-
-PPGMark = [path to BioSemiData folder]/P05T01_BioSEMIData_PPGMark.mat;
+PPGMark = test_data/PPGData;
 
 PlotTF = False;
 
