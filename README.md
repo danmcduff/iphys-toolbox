@@ -6,7 +6,8 @@ This toolbox contains MATLAB implementations of a number of algorithms for iPPG 
 If you find this toolbox helpful and make use of it in your work please cite:
 
 An Open Imaging-based Physiological Measurement Toolbox
-Daniel McDuff, Weixuan Vincent Chen, Ethan Blackford and Justin Estepp 
+
+Daniel McDuff, Ethan Blackford and Justin Estepp 
 
 ## Background: ## 
 
