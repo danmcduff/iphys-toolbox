@@ -64,6 +64,8 @@ Each method takes the following inputs:
 
 *       VideoFile               =       Video filename.
 
+*       FS                      =       Framerate of Video;
+
 *       StartTime               =       Timepoint at which to start process (default = 15);
 
 *       Duration                =       Duration of the time window to process (default = 30 seconds).
@@ -91,6 +93,8 @@ And produces the following output:
 ### Example: ###
 
 VideoFile = test_data/example_video.mp4;
+
+FS = 30;
 
 StartTime = 15;
 
