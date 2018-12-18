@@ -20,6 +20,8 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = CHROM_DEHAAN(VideoFile, FS, StartTime,
 %   Requires - Signal Processing Toolbox
 %
 % Daniel McDuff, Ethan Blackford, Justin Estepp, December 2018
+% Copyright (c)
+% Licensed under the MIT license.
 
 %% Parameters
 SkinSegmentTF=false;

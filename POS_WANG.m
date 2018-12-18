@@ -20,6 +20,8 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = POS_WANG(VideoFile, FS, StartTime, Dur
 %   Requires - Signal Processing Toolbox
 %
 % Daniel McDuff, Ethan Blackford, Justin Estepp, June 2018
+% Copyright (c)
+% Licensed under the MIT license.
 
 %% Parameters
 SkinSegmentTF=false;

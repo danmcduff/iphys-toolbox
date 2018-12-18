@@ -1,6 +1,6 @@
 function [BVP, PR, HR_ECG, PR_PPG, SNR] = GREEN_VERKRUYSSE(VideoFile, FS, StartTime, Duration, ECGData, PPGData, PlotTF)
 % GREEN_VERKRUYSSE The method (Verkruysse, Svaasand, Nelson 2008) Method.
-%
+% 
 %   Inputs:
 %       VideoFile               = Video filename.
 %       FS                      = Video framerate.
@@ -20,6 +20,8 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = GREEN_VERKRUYSSE(VideoFile, FS, StartT
 %   Requires - Signal Processing Toolbox
 %
 % Daniel McDuff, Ethan Blackford, Justin Estepp, December 2018
+% Copyright (c)
+% Licensed under the MIT license.
 
 addpath(genpath('tools'))
 

@@ -20,6 +20,8 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = ICA_POH(VideoFile, FS, StartTime, Dura
 %   Requires - Signal Processing Toolbox
 %
 % Daniel McDuff, Ethan Blackford, Justin Estepp, December 2018
+% Copyright (c)
+% Licensed under the MIT license.
 
 addpath(genpath('tools'))
 
