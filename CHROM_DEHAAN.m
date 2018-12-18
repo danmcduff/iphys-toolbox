@@ -1,13 +1,13 @@
-function [BVP, PR, HR_ECG, PR_PPG, SNR] = CHROM_DEHAAN(VideoFile, StartTime, Duration, BioSemiData, ECGMark, PPGMark, PlotTF)
-% CHROM_DEHAAN The CHROM (DeHaan et al. 2014) Method applied to the AFRL dataset.
+function [BVP, PR, HR_ECG, PR_PPG, SNR] = CHROM_DEHAAN(VideoFile, FS, StartTime, Duration, ECGData, PPGData, PlotTF)
+% CHROM_DEHAAN The CHROM (DeHaan et al. 2014) Method.
 %
 %   Inputs:
 %       VideoFile               = Video filename.
+%       FS                      = Video framerate.
 %       StartTime               = Timepoint at which to start process (default = 15);
 %       Duration                = Duration of the time window to process (default = 30 seconds).
-%       BioSemiData             = Corresponding BioSemiData file.
-%       ECGMark                 = Corresponding BioSemiData_ECGMark data file.
-%       PPGMark                 = Corresponding BioSemiData_ECGMark data file.
+%       ECGData                 = Corresponding ECGData data file.
+%       PPGData                 = Corresponding PPGData data file.
 %       PlotTF                  = Boolean to turn plotting results on or off.
 %
 %   Outputs:
@@ -19,11 +19,9 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = CHROM_DEHAAN(VideoFile, StartTime, Dur
 %
 %   Requires - Signal Processing Toolbox
 %
-% Daniel McDuff, Ethan Blackford, Justin Estepp, June 2018
+% Daniel McDuff, Ethan Blackford, Justin Estepp, December 2018
 
 %% Parameters
-FS = 120; %true frame rate
-
 SkinSegmentTF=false;
 
 LPF = 0.70; %low cutoff frequency (Hz)
@@ -132,53 +130,82 @@ for i = 1:NWin
 end
 
 BVP=S;
+T=T(1:length(BVP));
 
 % Estimate Pulse Rate from periodogram
 PR = prpsd(BVP,FS,40,240,PlotPRPSD);
 
 %% Ground Truth HR:
-ECG=load(ECGMark,'KeepBeatData');
-%KeepBeatData Format (ECG)- Beat Index, Inter-Beat Interval (ms), Zero-Referenced Sample Index of R-wave Maximum, Zero-Referenced Time of R-Wave (s), Amplitude of R-Wave in Filtered Signal, Zero-Referenced Sample Index of R-wave Maximum, Zero-Referenced Time of S-Wave (s), Amplitude of S-Wave in Filtered Signal, User Added Data (0-automatic, 1-user added/ corrected)
-ECGMask = (ECG.KeepBeatData(:,4)>=StartTime)&(ECG.KeepBeatData(:,4)<=StartTime+Duration);
-HR_ECG = 1/mean(diff(ECG.KeepBeatData(ECGMask,4)))*60;
+load(ECGData);
+ECG.time = [1:length(ECG.data)]/ECG.fs;
+ECGMask = (ECG.time>=StartTime)&(ECG.time<=StartTime+Duration);
+ECGPeakMask = ((ECG.peaks./ECG.fs)>=StartTime)&((ECG.peaks./ECG.fs)<=StartTime+Duration);
+HR_ECG = 1/mean(diff(ECG.peaks(ECGPeakMask)./ECG.fs))*60;
 
-PPG=load(PPGMark,'KeepBeatData');
-%KeepBeatData Format (PPG)- Pulse Index, Inter-Pulse Interval (ms), Zero-Referenced Sample Index of Systolic Onset, Zero-Referenced Time of Systolic Onset (s), Amplitude of Pulse/ Systolic Onset in Filtered Signal, Empty, Empty, Empty, User Added Data (0-automatic, 1-user added/ corrected)
-PPGMask = (PPG.KeepBeatData(:,4)>=StartTime)&(PPG.KeepBeatData(:,4)<=StartTime+Duration);
-PR_PPG = 1/mean(diff(PPG.KeepBeatData(PPGMask,4)))*60;
+if ~isempty(PPGData)
+    load(PPGData);
+    PPG.time = [1:length(PPG.data)]/PPG.fs;
+    PPGMask = (PPG.time>=StartTime)&(PPG.time<=StartTime+Duration);
+    if isfield(PPG,'peaks')
+        PPGPeakMask = ((PPG.peaks./PPG.fs)>=StartTime)&((PPG.peaks./PPG.fs)<=StartTime+Duration);
+        PR_PPG = 1/mean(diff(PPG.data(PPGPeakMask)./PPG.fs))*60;
+    else
+        PR_PPG = nan;
+    end
+else
+    PR_PPG = nan;
+end
 
 %% SNR
 SNR = bvpsnr(BVP,FS,HR_ECG,PlotSNR);
 
 %% Optionally Plot Timeseries
 if(PlotTF)
-    %Plot ECG, PPG, iPPG timeseries
-    load(BioSemiData,'FiltNECG', 'FiltNPPG', 'ResampleTimeSeries')%load filtered and resampled ECG, PPG timeseries data
-    
+    %Plot ECG, PPG, iPPG timeseries    
     figure
     
-    Ax1=subplot(3,1,1);
-    plot(ResampleTimeSeries,FiltNECG)
-    hold on
-    plot(ECG.KeepBeatData(:,4),ECG.KeepBeatData(:,5),'*')
-    ylabel('ECG (a.u.)')
-    title('ECG, PPG, iPPG Timeseries')
+    if ~isempty(PPGData)
+        %Plot ECG
+        Ax1=subplot(3,1,1);
+        plot(ECG.time(ECGMask),ECG.data(ECGMask))
+        hold on
+        plot(ECG.peaks(ECGPeakMask)/ECG.fs,ECG.data(ECG.peaks(ECGPeakMask)),'*')
+        ylabel('ECG (a.u.)')
+        title('ECG, PPG, iPPG Timeseries')
+        %Plot PPG
+        Ax2=subplot(3,1,2);
+        plot(PPG.time(PPGMask),PPG.data(PPGMask))
+        ylabel('PPG (a.u.)')
+        %Plot iPPG
+        Ax3=subplot(3,1,3);
+        plot(T,BVP)
+        hold on
+        ylabel('iPPG (a.u.)')
+
+        xlabel('Time (s)')
+        
+        linkaxes([Ax1,Ax2,Ax3],'x')
+    else
+        %Plot ECG
+        Ax1=subplot(2,1,1);
+        plot(ECG.time(ECGMask),ECG.data(ECGMask))
+        hold on
+        plot(ECG.peaks(ECGPeakMask)/ECG.fs,ECG.data(ECG.peaks(ECGPeakMask)),'*')
+        ylabel('ECG (a.u.)')
+        title('ECG, PPG, iPPG Timeseries')
+        %Plot iPPG
+        Ax2=subplot(2,1,2);
+        plot(T,BVP)
+        hold on
+        ylabel('iPPG (a.u.)')
+
+        xlabel('Time (s)')
+        
+        linkaxes([Ax1,Ax2],'x')
+    end
     
-    Ax2=subplot(3,1,2);
-    plot(ResampleTimeSeries,FiltNPPG)
-    hold on
-    plot(PPG.KeepBeatData(:,4),-1*PPG.KeepBeatData(:,5),'*')
-    ylabel('PPG (a.u.)')
-    
-    Ax3=subplot(3,1,3);
-    plot(TX,BVP)
-    hold on
-    ylabel('iPPG (a.u.)')
-    
-    xlabel('Time (s)')
-    
-    linkaxes([Ax1,Ax2,Ax3],'x')
-    xlim([TX(1) TX(end)])%to account for differences caused by windows
+    xlim([StartTime StartTime+Duration])
+
 end%endif plot
 
 %% Remove Backup Functions
