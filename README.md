@@ -22,6 +22,12 @@ The plane orthogonal to the skin (POS [2017]) algorithm assumes the presence of 
 
 The toolbox contains implementations of the several of the most commonly used methods for video-based physiological measurement. Below we give citations and links to the publications on which these implementations are based:
 
+### GREEN CHANNEL - Verkruysse, Svaasand, Nelson (2008) ###
+
+https://www.osapublishing.org/DirectPDFAccess/9A6ECF3A-E3F8-74A3-6FAD721D7E164888_175396/oe-16-26-21434.pdf?da=1&id=175396&seq=0&mobile=no
+
+Verkruysse, W., Svaasand, L. O., & Nelson, J. S. (2008). Remote plethysmographic imaging using ambient light. Optics express, 16(26), 21434-21445.
+
 ### ICA - Poh, McDuff, Picard (2010) ###
 
 https://www.osapublishing.org/viewmedia.cfm?uri=oe-18-10-10762&seq=0&origin=search
