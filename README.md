@@ -111,4 +111,4 @@ PlotTF = False;
 
 ### Data ###
 
-Due to the size of the video example, please download the following video and add it to the "test_data" folder. [Video](https://drive.google.com/open?id=1oD4VbBD9ColSlbiIMEgxbvQ7LnXHPy1_)
+Due to the size of the video example, [please download it here](https://drive.google.com/open?id=1oD4VbBD9ColSlbiIMEgxbvQ7LnXHPy1_) and add it to the "test_data" folder. 
