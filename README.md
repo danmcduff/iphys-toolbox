@@ -70,9 +70,9 @@ Each method takes the following inputs:
 
 *       Duration                =       Duration of the time window to process (default = 30 seconds).
 
-*       ECGMark                 =       Corresponding ECGData data file.
+*       ECGData                 =       Corresponding ECGData data file.
 
-*       PPGMark                 =       Corresponding PPGData data file.
+*       PPGData                 =       Corresponding PPGData data file.
 
 *       PlotTF                  =       Boolean to turn plotting results on or off.
 
@@ -100,12 +100,15 @@ StartTime = 15;
 
 Duration = 300;
 
-ECGMark = test_data/ECGData;
+ECGData = test_data/ECGData;
 
-PPGMark = test_data/PPGData;
+PPGData = test_data/PPGData;
 
 PlotTF = False;
 
-[BVP, PR, HR_ECG, PR_PPG, SNR] = ICA_POH(VideoFile, StartTime, Duration, BioSemiData, ECGMark, PPGMark, PlotTF)
+[BVP, PR, HR_ECG, PR_PPG, SNR] = ICA_POH(VideoFile, FS, StartTime, Duration, ECGData, PPGData, PlotTF)
 
 
+### Data ###
+
+Due to the size of the video example, please download the following video and add it to the "test_data" folder. [Video](https://drive.google.com/open?id=1oD4VbBD9ColSlbiIMEgxbvQ7LnXHPy1_)
