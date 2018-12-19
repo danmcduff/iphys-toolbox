@@ -64,7 +64,7 @@ We would happily include additional implementations of iPPG or iBCG algorithms i
 
 ## Usage: ##
 
-The iPPG-toolbox accompanies the AFRL iPPG dataset (described below).  The scripts have been created to allow easy processing of the dataset but also to generalize to other iPPG data.
+The scripts have been created to allow easy processing of any video dataset.  We have also included example data in the "test_data" folder.
 
 Each method takes the following inputs:
 
