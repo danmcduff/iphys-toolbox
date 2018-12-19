@@ -3,6 +3,8 @@ In the past few years a lot of attention has been given to methods for remotely 
 
 This toolbox contains MATLAB implementations of a number of algorithms for non-contact physiological measurement. This will enable researchers to present results on their datasets using standard public implementations of the baseline methods with all parameters known. The toolbox includes implementations of many of the most commonly used baseline methods for imaging photplethysmography (iPPG) and image ballistocardiography (iBCG).
 
+#### Citation ####
+
 If you find this toolbox helpful and make use of it in your work please cite:
 
 iPhys: An Open Non-Contact Imaging-Based Physiological Measurement Toolbox
