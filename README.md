@@ -5,7 +5,7 @@ This toolbox contains MATLAB implementations of a number of algorithms for iPPG 
 
 If you find this toolbox helpful and make use of it in your work please cite:
 
-An Open Imaging-based Physiological Measurement Toolbox
+iPhys: An Open Non-Contact Imaging-Based Physiological Measurement Toolbox
 
 Daniel McDuff and Ethan Blackford
 
