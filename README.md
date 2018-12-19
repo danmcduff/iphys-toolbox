@@ -7,7 +7,7 @@ If you find this toolbox helpful and make use of it in your work please cite:
 
 An Open Imaging-based Physiological Measurement Toolbox
 
-Daniel McDuff, Ethan Blackford and Justin Estepp 
+Daniel McDuff and Ethan Blackford
 
 ## Background: ## 
 
