@@ -1,7 +1,7 @@
 # iPhys: An Open  Non-Contact  Imaging-Based  Physiological  Measurement
 In the past few years a lot of attention has been given to methods for remotely measuring PPG using low-cost cameras.  Imaging PPG (iPPG) focuses on the measurement of volumetric changes in blood flow at distance from the body using imaging devices to capture changes in transmitted or relected light. 
 
-This toolbox contains MATLAB implementations of a number of algorithms for iPPG analysis.  The toolbox includes implementations of many of the most commonly used baseline methods and was created to accompany the largest public iPPG dataset.
+This toolbox contains MATLAB implementations of a number of algorithms for non-contact physiological measurement. This will enable researchers to present results on their datasets using standard public implementations of the baseline methods with all parameters known. The toolbox includes implementations of many of the most commonly used baseline methods for imaging photplethysmography (iPPG) and image ballistocardiography (iBCG).
 
 If you find this toolbox helpful and make use of it in your work please cite:
 
