@@ -118,3 +118,7 @@ PlotTF = False;
 ### Data ###
 
 Due to the size of the video example, [please download it here](https://drive.google.com/open?id=1oD4VbBD9ColSlbiIMEgxbvQ7LnXHPy1_) and add it to the "test_data" folder. 
+
+The ECGData.mat file has three fields: 1) The waveform - ECGData.data, 2) The ECG sampling rate - ECGData.fs, 3) The ECG peak locations (in samples) - ECGData.peaks.
+
+The PPGData.mat file has three fields: 1) The waveform - PPGData.data, 2) The PPG sampling rate - PPGData.fs, 3) The PPG peak locations (in samples) - PPGData.peaks.
