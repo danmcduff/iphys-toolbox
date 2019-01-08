@@ -1,21 +1,21 @@
-function [BVP, PR, HR_ECG, PR_PPG, SNR] = ICA_POH(VideoFile, FS, StartTime, Duration, ECGData, PPGData, PlotTF)
-% ICA_POH The ICA (Poh, McDuff, Picard 2010) Method..
+function [BVP, PR, HR_ECG, PR_PPG, SNR] = ICA_POH(VideoFile, FS, StartTime, Duration, ECGFile, PPGFile, PlotTF)
+% ICA_POH The Independent Component Analysis (ICA) Method from: Poh, M. Z., McDuff, D. J., & Picard, R. W. (2010). Non-contact, automated cardiac pulse measurements using video imaging and blind source separation. Optics express, 18(10), 10762-10774. DOI: 10.1364/OE.18.010762
 %
 %   Inputs:
-%       VideoFile               = Video filename.
-%       FS                      = Video framerate.
-%       StartTime               = Timepoint at which to start process (default = 15);
-%       Duration                = Duration of the time window to process (default = 30 seconds).
-%       ECGData                 = Corresponding ECGData data file.
-%       PPGData                 = Corresponding PPGData data file.
+%       VideoFile               = Video file path.
+%       FS                      = Video framerate (fps).
+%       StartTime               = Timepoint at which to start process (default = 0 seconds).
+%       Duration                = Duration of the time window to process (default = 60 seconds).
+%       ECGFile                 = File path to corresponding ECG data file (.mat) containing: 1) The waveform - ECGData.data, 2) The ECG sampling rate - ECGData.fs, 3) The ECG peak locations (in samples) - ECGData.peaks.
+%       PPGFile                 = File path to corresponding PPG data file (.mat) containing: 1) The waveform - PPGData.data, 2) The PPG sampling rate - PPGData.fs, 3) The PPG peak locations (in samples) - PPGData.peaks.
 %       PlotTF                  = Boolean to turn plotting results on or off.
 %
 %   Outputs:
-%       BVP                     = Processed Blood Volume Pulse using JADE ICA.
-%       PR                      = Estimated Pulse Rate from processed BVP timeseries using peak in periodogram.
-%       HR_ECG                  = Gold standard Heart Rate measured from the ECG timeseries for the window.
-%       PR_PPG                  = Pulse Rate measured from the PPG timeseries for the window.
-%       SNR                     = Blood Volume Pulse Signal-to-Noise Ratio calculated based on the ECG HR frequency using a method adapted from the method by G. de Haan, TBME, 2013
+%       BVP                     = Processed Blood Volume Pulse (BVP).
+%       PR                      = Estimated Pulse Rate (PR) from processed BVP timeseries using peak in periodogram.
+%       HR_ECG                  = Gold standard Heart Rate (HR) measured from the ECG timeseries R-waves for the window.
+%       PR_PPG                  = Pulse Rate (PR) measured from the PPG timeseries systolic onsets for the window.
+%       SNR                     = Blood Volume Pulse Signal-to-Noise Ratio (SNR) calculated based on the ECG HR frequency using a method adapted from the method by G. de Haan, TBME, 2013.
 %
 %   Requires - Signal Processing Toolbox
 %
@@ -45,7 +45,7 @@ VidObj.CurrentTime = StartTime;
 FramesToRead=ceil(Duration*VidObj.FrameRate); %video may be encoded at slightly different frame rate
 
 %% Read Video and Spatially Average:
-T = zeros(FramesToRead,1);%initialize Time Vector
+T = zeros(FramesToRead,1);%initialize time vector
 RGB=zeros(FramesToRead,3);%initialize color signal
 FN=0;
 while hasFrame(VidObj) && (VidObj.CurrentTime <= StartTime+Duration)
@@ -58,7 +58,7 @@ while hasFrame(VidObj) && (VidObj.CurrentTime <= StartTime+Duration)
     
     %position for optional skin segmentation
     
-    RGB(FN,:) = sum(sum(VidROI));
+    RGB(FN,:) = sum(sum(VidROI));%if different size regions are used for different frames, the signals should be normalized by the region size, but not necessary for whole frame processing or constant region size
 end
 
 %% Detrend & ICA:
@@ -100,24 +100,24 @@ BVP=BVP_F;
 PR = prpsd(BVP,FS,40,240,PlotPRPSD);
 
 %% Ground Truth HR:
-load(ECGData);
-ECG.time = [1:length(ECG.data)]/ECG.fs;
-ECGMask = (ECG.time>=StartTime)&(ECG.time<=StartTime+Duration);
-ECGPeakMask = ((ECG.peaks./ECG.fs)>=StartTime)&((ECG.peaks./ECG.fs)<=StartTime+Duration);
-HR_ECG = 1/mean(diff(ECG.peaks(ECGPeakMask)./ECG.fs))*60;
+load(ECGFile);
+ECG.time = (1:length(ECG.data))/ECG.fs;
+ECGMask = (ECG.time>=StartTime) & (ECG.time<=StartTime+Duration);
+ECGPeakMask = ((ECG.peaks./ECG.fs)>=StartTime) & ((ECG.peaks./ECG.fs)<=StartTime+Duration);
+HR_ECG = (1/mean(diff(ECG.peaks(ECGPeakMask)./ECG.fs)))*60;
 
-if ~isempty(PPGData)
-    load(PPGData);
-    PPG.time = [1:length(PPG.data)]/PPG.fs;
-    PPGMask = (PPG.time>=StartTime)&(PPG.time<=StartTime+Duration);
+if ~isempty(PPGFile)
+    load(PPGFile);
+    PPG.time = (1:length(PPG.data))/PPG.fs;
+    PPGMask = (PPG.time>=StartTime) & (PPG.time<=StartTime+Duration);
     if isfield(PPG,'peaks')
-        PPGPeakMask = ((PPG.peaks./PPG.fs)>=StartTime)&((PPG.peaks./PPG.fs)<=StartTime+Duration);
-        PR_PPG = 1/mean(diff(PPG.data(PPGPeakMask)./PPG.fs))*60;
+        PPGPeakMask = ((PPG.peaks./PPG.fs)>=StartTime) & ((PPG.peaks./PPG.fs)<=StartTime+Duration);
+        PR_PPG = (1/mean(diff(PPG.peaks(PPGPeakMask)./PPG.fs)))*60;
     else
-        PR_PPG = nan;
+        PR_PPG = NaN;
     end
 else
-    PR_PPG = nan;
+    PR_PPG = NaN;
 end
 
 %% SNR
@@ -128,18 +128,22 @@ if(PlotTF)
     %Plot ECG, PPG, iPPG timeseries    
     figure
     
-    if ~isempty(PPGData)
+    if ~isempty(PPGFile)
         %Plot ECG
         Ax1=subplot(3,1,1);
         plot(ECG.time(ECGMask),ECG.data(ECGMask))
         hold on
         plot(ECG.peaks(ECGPeakMask)/ECG.fs,ECG.data(ECG.peaks(ECGPeakMask)),'*')
         ylabel('ECG (a.u.)')
-        title('ECG, PPG, iPPG Timeseries')
+        title('ICA Method - ECG, PPG, iPPG Timeseries')
+        
         %Plot PPG
         Ax2=subplot(3,1,2);
         plot(PPG.time(PPGMask),PPG.data(PPGMask))
+        hold on
+        plot(PPG.peaks(PPGPeakMask)/PPG.fs,PPG.data(PPG.peaks(PPGPeakMask)),'*')
         ylabel('PPG (a.u.)')
+        
         %Plot iPPG
         Ax3=subplot(3,1,3);
         plot(T,BVP)
@@ -156,10 +160,11 @@ if(PlotTF)
         hold on
         plot(ECG.peaks(ECGPeakMask)/ECG.fs,ECG.data(ECG.peaks(ECGPeakMask)),'*')
         ylabel('ECG (a.u.)')
-        title('ECG, PPG, iPPG Timeseries')
+        title('ICA Method - ECG, iPPG Timeseries')
+        
         %Plot iPPG
         Ax2=subplot(2,1,2);
-        plot(T,BVP)
+        plot(T,BVP)      
         hold on
         ylabel('iPPG (a.u.)')
 
