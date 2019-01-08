@@ -15,6 +15,8 @@ ArXiv
 
 Link: ...
 
+We welcome suggestions or contact regarding the toolbox.  Please contact: damcduff@microsoft.com
+
 ## Background: ## 
 
 Imaging photoplethysmography (iPPG) has developed as a method for capturing the BVP signal remotely using digital cameras and ambient light. Almost any digital camera (i.e., webcam or cellphone camera) is sufficiently sensitive to capture the pulse signal when the subject is close to the device.  Poh et al. (2010) proposed the use of Independent Component Analysis (ICA) to recover the pulse signal and enable a fully automated iPPG framework.
