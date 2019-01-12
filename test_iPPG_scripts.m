@@ -54,6 +54,6 @@ PR, HR_ECG, PR_PPG, SNR
 % Balakrishnan, G., Durand, F., & Guttag, J. (2013, June). Detecting pulse
 % from head motions in video. In Computer Vision and Pattern Recognition
 % (CVPR), 2013 IEEE Conference on (pp. 3430-3437). IEEE. DOI: 10.1109/CVPR.2013.440
-[BVP, PR, HR_ECG, PR_PPG, SNR] = BCG_BALAKRISHNAN(VideoFile, FS, StartTime, Duration, ECGFile, PPGFile, PlotTF);
+[BCG, PR, HR_ECG, PR_PPG, SNR] = BCG_BALAKRISHNAN(VideoFile, FS, StartTime, Duration, ECGFile, PPGFile, PlotTF);
 fprintf('BCG_BALAKRISHNAN:\n')
 PR, HR_ECG, PR_PPG, SNR
