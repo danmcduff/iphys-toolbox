@@ -23,12 +23,13 @@ if(~exist(PPGFile,'file'))
 end
 
 %% Green - Verkruysse, Svaasand, Nelson (2008)
-%Verkruysse, W., Svaasand, L. O., & Nelson, J. S. (2008). Remote
-%plethysmographic imaging using ambient light. Optics express, 16(26),
-%21434-21445. DOI: 10.1364/OE.16.021434
+% Verkruysse, W., Svaasand, L. O., & Nelson, J. S. (2008). Remote
+% plethysmographic imaging using ambient light. Optics express, 16(26),
+% 21434-21445. DOI: 10.1364/OE.16.021434
 [BVP, PR, HR_ECG, PR_PPG, SNR] = GREEN_VERKRUYSSE(VideoFile, FS, StartTime, Duration, ECGFile, PPGFile, PlotTF);
 fprintf('GREEN_VERKRUYSSE:\n')
 PR, HR_ECG, PR_PPG, SNR
+
 %% ICA - Poh, McDuff, Picard (2010)
 % Poh, M. Z., McDuff, D. J., & Picard, R. W. (2010). Non-contact, automated
 % cardiac pulse measurements using video imaging and blind source
@@ -36,6 +37,7 @@ PR, HR_ECG, PR_PPG, SNR
 [BVP, PR, HR_ECG, PR_PPG, SNR] = ICA_POH(VideoFile, FS, StartTime, Duration, ECGFile, PPGFile, PlotTF);
 fprintf('ICA_POH:\n')
 PR, HR_ECG, PR_PPG, SNR
+
 %% CHROM - De Haan & Jeanne (2013)
 % De Haan, G., & Jeanne, V. (2013). Robust pulse rate from
 % chrominance-based rPPG. IEEE Transactions on Biomedical Engineering,
@@ -43,6 +45,7 @@ PR, HR_ECG, PR_PPG, SNR
 [BVP, PR, HR_ECG, PR_PPG, SNR] = CHROM_DEHAAN(VideoFile, FS, StartTime, Duration, ECGFile, PPGFile, PlotTF);
 fprintf('CHROM_DEHAAN:\n')
 PR, HR_ECG, PR_PPG, SNR
+
 %% POS - Wang, den Brinker, Stuijk & de Haan (2017)
 % Wang, W., den Brinker, A. C., Stuijk, S., & de Haan, G. (2017).
 % Algorithmic principles of remote PPG. IEEE Transactions on Biomedical
@@ -50,6 +53,7 @@ PR, HR_ECG, PR_PPG, SNR
 [BVP, PR, HR_ECG, PR_PPG, SNR] = POS_WANG(VideoFile, FS, StartTime, Duration, ECGFile, PPGFile, PlotTF);
 fprintf('POS_WANG:\n')
 PR, HR_ECG, PR_PPG, SNR
+
 %% BCG - Balakrishnan, Durand & Guttag (2013)
 % Balakrishnan, G., Durand, F., & Guttag, J. (2013, June). Detecting pulse
 % from head motions in video. In Computer Vision and Pattern Recognition

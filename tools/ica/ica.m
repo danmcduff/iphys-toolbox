@@ -5,7 +5,7 @@ function [W, Zhat] = ica(X,Nsources,Wprev)
 %
 %   Inputs:
 %       X               = Observation matrix: rows should be observations, cols samples.
-%       Nsources        = Video framerate (fps).
+%       Nsources        = Number of source signals (optional).
 %       Wprev           = Timepoint at which to start process (default = 0 seconds).
 %
 %   Outputs:
