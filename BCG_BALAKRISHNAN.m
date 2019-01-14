@@ -19,7 +19,7 @@ function [BCG, PR, HR_ECG, PR_PPG, SNR] = BCG_BALAKRISHNAN(VideoFile, FS, StartT
 %
 %   Requires - Signal Processing Toolbox, Computer Vision System Toolbox
 %
-% Daniel McDuff, Ethan Blackford, Justin Estepp, December 2018
+% Daniel McDuff, Ethan Blackford, January 2019
 % Copyright (c)
 % Licensed under the MIT license.
 
@@ -95,6 +95,7 @@ catch TrackError%optional catch to run example without Computer Vision Toolbox b
         TrackError
     end
 end% end try-catch
+
 %originally specified in reference with cubic-spine interpolation to 250Hz (from 30 Hz) to match sampling rate of ECG device.
 
 %% Signal Processing:
