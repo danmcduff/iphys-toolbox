@@ -27,6 +27,10 @@ Imaging photoplethysmography (iPPG) has developed as a method for capturing the 
 Methods inspired by optical models of the skin have helped advance the state-of-the art. The CHROM (2013) method uses a linear combination of the chrominance signals and makes the assumption of a standardized skin color profile to white-balance the video frames. 
 The plane orthogonal to the skin (POS [2017]) algorithm assumes the presence of a pulsatile color space signal and posits that this will be orthogonal to the skin color space.
 
+## Licensing: ##
+
+The code is licensed with the RAIL AI Licenses (https://www.licenses.ai/) that allows use of the software including rights to use, copy or modify it, with the exception of harmful applications as specified in: https://www.licenses.ai/open-source-license.
+
 ## Methods: ## 
 
 The toolbox contains implementations of the several of the most commonly used methods for video-based physiological measurement. Below we give citations and links to the publications on which these implementations are based:
