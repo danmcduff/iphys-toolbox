@@ -13,7 +13,8 @@ Daniel McDuff and Ethan Blackford
 
 ArXiv
 
-Link: ...
+Link: http://arxiv.org/abs/1901.04366
+Cite as:	arXiv:1901.04366 [cs.CV]
 
 We welcome suggestions or contact regarding the toolbox.  Please contact: damcduff@microsoft.com
 
@@ -25,6 +26,10 @@ Imaging photoplethysmography (iPPG) has developed as a method for capturing the 
 
 Methods inspired by optical models of the skin have helped advance the state-of-the art. The CHROM (2013) method uses a linear combination of the chrominance signals and makes the assumption of a standardized skin color profile to white-balance the video frames. 
 The plane orthogonal to the skin (POS [2017]) algorithm assumes the presence of a pulsatile color space signal and posits that this will be orthogonal to the skin color space.
+
+## Licensing: ##
+
+The code is licensed with the RAIL AI Licenses (https://www.licenses.ai/) that allows use of the software including rights to use, copy or modify it, with the exception of harmful applications as specified in: https://www.licenses.ai/open-source-license.
 
 ## Methods: ## 
 
