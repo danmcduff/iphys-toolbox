@@ -1,5 +1,6 @@
 function [y] = spdetrend(x,lambda)
-%spdetrend Detrends a signal with the smoothness priors approach from M. P. Tarvainen, TBME, 2002
+%SPDETREND Detrends a signal with the smoothness priors approach implemented 
+% based on M. P. Tarvainen, TBME, 2002
 %
 %   Inputs:
 %       x                       = Signal to detrend.
@@ -7,6 +8,10 @@ function [y] = spdetrend(x,lambda)
 %
 %   Outputs:
 %       y                       = The detrended signal.
+%
+% Daniel McDuff, Ethan Blackford, January 2019
+% Copyright (c)
+% Licensed under the RAIL AI License.
 
 T=length(x);
 I=speye(T);

@@ -9,7 +9,11 @@ function [PR] = prpsd(BVP, FS, LL_PR, UL_PR, PlotTF)
 %
 %   Outputs:
 %       PR                      = The estimated PR in BPM.
-% Daniel McDuff, Ethan Blackford, Justin Estepp, June 2018
+%
+% Daniel McDuff, Ethan Blackford, January 2019
+% Copyright (c)
+% Licensed under the RAIL AI License.
+
 %%
 Nyquist = FS/2;
 FResBPM = 0.5; %resolution (bpm) of bins in power spectrum used to determine PR and SNR

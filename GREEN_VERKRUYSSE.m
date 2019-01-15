@@ -21,7 +21,7 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = GREEN_VERKRUYSSE(VideoFile, FS, StartT
 %
 % Daniel McDuff, Ethan Blackford, January 2019
 % Copyright (c)
-% Licensed under the MIT license.
+% Licensed under the RAIL AI License.
 
 addpath(genpath('tools'))
 

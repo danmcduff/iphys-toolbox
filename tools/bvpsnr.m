@@ -14,7 +14,10 @@ function [SNR] = bvpsnr(BVP, FS, HR, PlotTF)
 %
 %   Outputs:
 %       SNR                     = Blood Volume Pulse Signal-to-Noise Ratio.
-% Daniel McDuff, Ethan Blackford, Justin Estepp, June 2018
+%
+% Daniel McDuff, Ethan Blackford, January 2019
+% Copyright (c)
+% Licensed under the RAIL AI License.
 
 HR_F=HR/60;
 
