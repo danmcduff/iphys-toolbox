@@ -13,7 +13,8 @@ Daniel McDuff and Ethan Blackford
 
 ArXiv
 
-Link: ...
+Link: http://arxiv.org/abs/1901.04366
+Cite as:	arXiv:1901.04366 [cs.CV]
 
 We welcome suggestions or contact regarding the toolbox.  Please contact: damcduff@microsoft.com
 
