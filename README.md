@@ -9,7 +9,7 @@ If you find this toolbox helpful and make use of it in your work please cite:
 
 iPhys: An Open Non-Contact Imaging-Based Physiological Measurement Toolbox
 
-Daniel McDuff and Ethan Blackford
+Daniel McDuff
 
 ArXiv
 
