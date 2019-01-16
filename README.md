@@ -7,7 +7,7 @@ This toolbox contains MATLAB implementations of a number of algorithms for non-c
 
 If you find this toolbox helpful and make use of it in your work please cite:
 
-iPhys: An Open Non-Contact Imaging-Based Physiological Measurement Toolbox
+### iPhys: An Open Non-Contact Imaging-Based Physiological Measurement Toolbox ###
 
 Daniel McDuff
 
