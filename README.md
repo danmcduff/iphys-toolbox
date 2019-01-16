@@ -74,31 +74,31 @@ The scripts have been created to allow easy processing of any video dataset.  We
 
 Each method takes the following inputs:
 
-*       VideoFile               =       Video file path.
+*       VideoFile         =       Video file path.
 
-*       FS                      =       Video framerate (fps).
+*       FS                =       Video framerate (fps).
 
-*       StartTime               =       Timepoint at which to start process (default = 0 seconds).
+*       StartTime         =       Timepoint at which to start process (default = 0 seconds).
 
-*       Duration                =       Duration of the time window to process (default = 60 seconds).
+*       Duration          =       Duration of the time window to process (default = 60 seconds).
 
-*       ECGFile                 =       File path to corresponding ECG data (.mat) file containing: 1) The waveform - ECGData.data, 2) The ECG sampling rate - ECGData.fs, 3) The ECG peak locations (in samples) - ECGData.peaks.
+*       ECGFile           =       File path to corresponding ECG data (.mat) file containing: 1) The waveform - ECGData.data, 2) The ECG sampling rate - ECGData.fs, 3) The ECG peak locations (in samples) - ECGData.peaks.
 
-*       PPGFile                 =       File path to corresponding PPG data (.mat) file containing: 1) The waveform - PPGData.data, 2) The PPG sampling rate - PPGData.fs, 3) The PPG peak locations (in samples) - PPGData.peaks.
+*       PPGFile           =       File path to corresponding PPG data (.mat) file containing: 1) The waveform - PPGData.data, 2) The PPG sampling rate - PPGData.fs, 3) The PPG peak locations (in samples) - PPGData.peaks.
 
-*       PlotTF                  =       Boolean to turn plotting results on or off.
+*       PlotTF            =       Boolean to turn plotting results on or off.
 
 And produces the following output:
 
-*        BVP                     =    The predicted blood volume pulse signal.
+*        BVP              =    The predicted blood volume pulse signal.
 
-*        PR                      =    Estimated Pulse Rate (PR) from BVP timeseries using peak in periodogram.
+*        PR               =    Estimated Pulse Rate (PR) from BVP timeseries using peak in periodogram.
 
-*        HR_ECG                  =    Gold standard reference Heart Rate (HR) measured from the ECG timeseries.
+*        HR_ECG           =    Gold standard reference Heart Rate (HR) measured from the ECG timeseries.
 
-*        PR_PPG                  =    Pulse Rate measured from the PPG timeseries for the window.
+*        PR_PPG           =    Pulse Rate measured from the PPG timeseries for the window.
 
-*        SNR                     =    Blood Volume Pulse Signal-to-Noise Ratio calculated based on the ECG HR frequency.
+*        SNR              =    Blood Volume Pulse Signal-to-Noise Ratio calculated based on the ECG HR frequency.
 
 
 ### Example: ###
