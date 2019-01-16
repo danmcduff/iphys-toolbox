@@ -11,6 +11,6 @@ function I = argmax(X, DIM)
 %
 % Daniel McDuff, Ethan Blackford, January 2019
 % Copyright (c)
-% Licensed under the RAIL AI License.
+% Licensed under the MIT License and the RAIL AI License.
 
 [~,I] = max(X,[],DIM);

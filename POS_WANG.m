@@ -21,7 +21,7 @@ function [BVP, PR, HR_ECG, PR_PPG, SNR] = POS_WANG(VideoFile, FS, StartTime, Dur
 %
 % Daniel McDuff, Ethan Blackford, January 2019
 % Copyright (c)
-% Licensed under the RAIL AI License.
+% Licensed under the MIT License and the RAIL AI License.
 
 %% Parameters
 SkinSegmentTF = false;

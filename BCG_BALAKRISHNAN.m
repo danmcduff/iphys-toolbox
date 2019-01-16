@@ -21,7 +21,7 @@ function [BCG, PR, HR_ECG, PR_PPG, SNR] = BCG_BALAKRISHNAN(VideoFile, FS, StartT
 %
 % Daniel McDuff, Ethan Blackford, January 2019
 % Copyright (c)
-% Licensed under the RAIL AI License.
+% Licensed under the MIT License and the RAIL AI License.
 
 %% Parameters
 LPF = 0.7; %low cutoff frequency (Hz) - specified as 0.75 Hz in reference

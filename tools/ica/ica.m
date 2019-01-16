@@ -18,7 +18,7 @@ function [W, Zhat] = ica(X,Nsources,Wprev)
 %
 % Daniel McDuff, Ethan Blackford, Justin Estepp, December 2018
 % Based on an implementation by: G D Clifford (2004) gari AT mit DOT edu
-% Licensed under the RAIL AI License.
+% Licensed under the MIT License and the RAIL AI License.
 
 [nRows, nCols] = size(X);
 if nRows > nCols

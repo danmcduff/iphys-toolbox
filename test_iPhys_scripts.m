@@ -1,7 +1,7 @@
 % Demo script for testing the imaging-based physiological measurement
 % methods included in the iPhys Toolbox.
 %
-% Licensed under the RAIL AI License.
+% Licensed under the MIT License and the RAIL AI License.
 
 clc, clear; close all
 addpath(genpath([cd '\tools\']))%additional required functions
