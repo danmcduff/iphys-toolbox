@@ -29,7 +29,7 @@ The plane orthogonal to the skin (POS [2017]) algorithm assumes the presence of 
 
 ## Licensing: ##
 
-The code is licensed with the RAIL AI Licenses (https://www.licenses.ai/) that allows use of the software including rights to use, copy or modify it, with the exception of harmful applications as specified in: https://www.licenses.ai/open-source-license.
+The code is licensed with the MIT License and the RAIL AI Licenses (https://www.licenses.ai/) that allows use of the software including rights to use, copy or modify it, with the exception of harmful applications as specified in: https://www.licenses.ai/open-source-license.
 
 ## Methods: ## 
 
